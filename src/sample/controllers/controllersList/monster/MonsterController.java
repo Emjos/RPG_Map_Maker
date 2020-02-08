@@ -26,11 +26,11 @@ public class MonsterController {
     @FXML
     private Button deleteMonster;
 
-    static ObservableList<String> items = FXCollections.observableArrayList();
+    static ObservableList<String> monsterItems = FXCollections.observableArrayList();
 
  @FXML
  public void initialize(){
-     monsterLists.setItems(items);
+     monsterLists.setItems(monsterItems);
  }
 
 

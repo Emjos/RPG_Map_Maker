@@ -14,7 +14,7 @@
       <Label layoutX="345.0" layoutY="55.0" text="HitPoints:" />
       <Label layoutX="345.0" layoutY="101.0" text="Level: (1-10)" />
       <Label layoutX="269.0" layoutY="191.0" text="Decroption:" />
-      <TextField fx:id="nemeField" layoutX="114.0" layoutY="51.0" />
+      <TextField fx:id="nemeFIeld" layoutX="114.0" layoutY="51.0" />
       <TextField fx:id="typeField" layoutX="114.0" layoutY="97.0" />
       <TextField fx:id="hitPointsField" layoutX="415.0" layoutY="51.0" />
       <TextField fx:id="lvlField" alignment="CENTER" layoutX="418.0" layoutY="97.0" prefHeight="25.0" prefWidth="29.0" promptText="0" text="0" />

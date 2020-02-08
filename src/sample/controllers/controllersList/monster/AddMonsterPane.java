@@ -10,8 +10,9 @@ import sample.controllers.windows.AlertWindow;
 
 public class AddMonsterPane {
 
+
     @FXML
-    private TextField nemeField;
+    public TextField nemeFIeld;
 
     @FXML
     private TextField typeField;
@@ -39,19 +40,19 @@ public class AddMonsterPane {
     @FXML
     public void initialize(){
        if(MonsterHandle.flag == 1){
-           nemeField.setText(MonsterHandle.monsterHandle.name);
-           typeField.setText(MonsterHandle.monsterHandle.type);
-           descriptionField.setText(MonsterHandle.monsterHandle.desctiption);
-           lvlField.setText(String.valueOf(MonsterHandle.monsterHandle.lvl));
-           hitPointsField.setText(String.valueOf(MonsterHandle.monsterHandle.hp));
-           nemeField.setDisable(true);
+           nemeFIeld.setText(MonsterHandle.monsterHandle.getName());
+           typeField.setText(MonsterHandle.monsterHandle.getType());
+           descriptionField.setText(MonsterHandle.monsterHandle.getDesctiption());
+           lvlField.setText(String.valueOf(MonsterHandle.monsterHandle.getLvl()));
+           hitPointsField.setText(String.valueOf(MonsterHandle.monsterHandle.getHp()));
+           nemeFIeld.setDisable(true);
        }
     }
 
     @FXML
     void closeAction(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
-
+        MonsterHandle.flag = 0;
         stage.close();
     }
 
@@ -64,8 +65,8 @@ public class AddMonsterPane {
                 int hp = Integer.parseInt(hitPointsField.getText());
                 int lvl = Integer.parseInt(lvlField.getText());
                 if (MonsterHandle.flag == 0) {
-                    Monster monster = new Monster(nemeField.getText(), typeField.getText(), hp, lvl, descriptionField.getText());
-                    MonsterController.items.add(nemeField.getText());
+                    Monster monster = new Monster(nemeFIeld.getText(), typeField.getText(), hp, lvl, descriptionField.getText());
+                    MonsterController.monsterItems.add(nemeFIeld.getText());
                     MonsterHandle.monsterList.add(monster);
                 }
 
@@ -73,18 +74,18 @@ public class AddMonsterPane {
 
                     for (Monster monster : MonsterHandle.monsterList) {
 
-                        if (monster.name.equals(nemeField.getText())) {
+                        if (monster.getName().equals(nemeFIeld.getText())) {
 
-                            monster.desctiption = descriptionField.getText();
-                            monster.type = typeField.getText();
-                            monster.lvl = lvl;
-                            monster.hp = hp;
+                            monster.setDesctiption(descriptionField.getText()) ;
+                            monster.setType(typeField.getText());
+                            monster.setLvl(lvl);
+                            monster.setHp(hp);
 
 
                         }
 
                     }
-
+                    MonsterHandle.flag = 0;
                 }
 
                 MonsterHandle.flag = 0;

@@ -13,6 +13,7 @@ public class ToDo {
     // sprobowac w klasie Tile dodac urlBackground, wraz ze flaga bylby nadpisany a bez flagi dawal by domyslnie ta sama grafike
 
 
+    //// 08.02  Nazwy w Mostach i Itemach nie powinny sie powtarzac !!
 
     /*
     Kafelki do terra powinny byc mniejsze , napewno drogi

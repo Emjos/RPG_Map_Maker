@@ -2,13 +2,13 @@ package sample.controllers.controllersList.monster;
 
 public class Monster {
 
-    String name;
-    String type;
-    int hp;
-    int lvl;
-    String desctiption;
-    int indexMonster;
-    static int indexMonsterCounter =0;
+   private String name;
+    private String type;
+    private int hp;
+    private int lvl;
+    private  String desctiption;
+    private  int indexMonster;
+      static int indexMonsterCounter =0;
 
     public Monster(String name, String type, int hp, int lvl, String desctiption) {
         this.name = name;

@@ -3,7 +3,7 @@ package sample.controllers.controllersList.monster;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonsterHandle {
+ class MonsterHandle {
 
     static  Monster monsterHandle;
     static int index;
@@ -16,7 +16,7 @@ public class MonsterHandle {
 
         for (Monster monster : monsterList) {
 
-            if (monster.name.equals(name)) {
+            if (monster.getName().equals(name)) {
 
                 monsterHandle = monster;
             }
@@ -26,8 +26,9 @@ public class MonsterHandle {
         static void delete (String name){
 
             for (int a = 0 ; a < monsterList.size() ; a++){
-                if (monsterList.get(a).name.equals(name)){
+                if (monsterList.get(a).getName().equals(name)){
                     monsterList.remove(a);
+                    break;
                 }
 
             }
