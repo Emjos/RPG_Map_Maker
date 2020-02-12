@@ -2,7 +2,6 @@ package sample.controllers;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
@@ -12,10 +11,9 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
-import javafx.stage.WindowEvent;
-import sample.controllers.controllersList.items.ItemController;
+import sample.controllers.controllersList.items.ItemHandle;
+import sample.controllers.controllersList.items.views.Item;
 import sample.controllers.controllersList.monster.Monster;
-import sample.controllers.controllersList.monster.MonsterController;
 import sample.controllers.controllersList.monster.MonsterHandle;
 import sample.controllers.helpClass.UrlHandle;
 import sample.controllers.windows.AlertWindow;
@@ -109,7 +107,34 @@ public class Controller {
 
     @FXML
     private Button zoomMinusButton;
+    @FXML
+    public void initialize()
+    {
+        addRightMenu();
 
+    }
+    ContextMenu contextMenu = new ContextMenu();
+    static public Menu menuMonster = new Menu("Add Monster");
+    static public Menu menuItem = new Menu("Add Item");
+
+    public  void addRightMenu() {
+        contextMenu.getItems().add(menuMonster);
+        contextMenu.getItems().add(menuItem);
+    }
+    public  void updateRightMenu()
+    {
+        menuMonster.getItems().clear();
+
+        menuItem.getItems().clear();
+
+        for (Monster monster : MonsterHandle.monsterList)
+        { menuMonster.getItems().add(new MenuItem(monster.getName()));   }
+        for (Item item: ItemHandle.itemsList)
+        {menuItem.getItems().add(new MenuItem(item.getName()));}
+
+
+    }
+    ArrayList<MenuItem> menuItemsMonster = new ArrayList<>();
     @FXML
     void create(ActionEvent event) throws Exception {
         menu.setItems(Menuitems);
@@ -127,17 +152,6 @@ public class Controller {
 
 
 
-    ContextMenu contextMenu = new ContextMenu();
-    Menu menuItem = new Menu("Add Monster");
-    MenuItem menuItem2 = new MenuItem("Add Item");
-    ArrayList<MenuItem> menuItemsMonster = new ArrayList<>();
-
-    void addToAddMenuList(){
-
-        for (Monster monster : MonsterHandle.monsterList) {
-          menuItemsMonster.add(new MenuItem(monster.getName()));
-        }
-    }
 
 
 
@@ -152,7 +166,7 @@ public class Controller {
 
 
         if(button==MouseButton.PRIMARY) {
-        contextMenu.hide();
+            contextMenu.hide();
 
             if (xPosition >= MapClass.width) {
                 xPosition = MapClass.width - 1;
@@ -169,23 +183,30 @@ public class Controller {
                 changePhotoClear(yPosition, xPosition);
             }
         }
-        else if(button==MouseButton.SECONDARY)
-        {
-        contextMenu.getItems().add(menuItem2);
-        // dodac childs do parents
+        else if(button==MouseButton.SECONDARY) {
+            try {
+                contextMenu.hide();
+                updateRightMenu();
+
+                // dodac childs do parents
 
 
-            tilePane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+                tilePane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
-                @Override
-                public void handle(ContextMenuEvent event) {
+                    @Override
+                    public void handle(ContextMenuEvent event) {
 
-                    contextMenu.show(tilePane, event.getScreenX(), event.getScreenY());
-                }
+                       contextMenu.show(tilePane, event.getScreenX(), event.getScreenY());
+                    }
 
-            });
+                });
 
+            }
+            catch (UnsupportedOperationException e){
+                System.out.println("cos nie pyklo");
+            }
         }
+
 
 
     }

@@ -1,7 +1,9 @@
 package sample.controllers.controllersList.monster;
 
+import sample.controllers.Controller;
 import sample.controllers.helpClass.ListHanle;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 

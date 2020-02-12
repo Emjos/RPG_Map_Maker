@@ -19,6 +19,7 @@ public class Monster {
         indexMonster = indexMonsterCounter;
         indexMonsterCounter++;
 
+
     }
 
     public String getName() {

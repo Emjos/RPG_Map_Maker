@@ -3,10 +3,14 @@ package sample.controllers.controllersList.monster;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.controllers.Controller;
 import sample.controllers.windows.AlertWindow;
+
+import java.sql.Connection;
 
 public class AddMonsterPane {
 
@@ -68,6 +72,7 @@ public class AddMonsterPane {
                     Monster monster = new Monster(nemeFIeld.getText(), typeField.getText(), hp, lvl, descriptionField.getText());
                     MonsterController.monsterItems.add(nemeFIeld.getText());
                     MonsterHandle.monsterList.add(monster);
+
                 }
 
                 if (MonsterHandle.flag == 1) {

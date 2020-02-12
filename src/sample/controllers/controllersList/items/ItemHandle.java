@@ -5,7 +5,7 @@ import sample.controllers.controllersList.items.views.Item;
 import java.util.ArrayList;
 import java.util.List;
 
- class ItemHandle {
+ public class ItemHandle {
 
     static Item itemHandle;
     static int index;
