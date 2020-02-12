@@ -7,10 +7,16 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import sample.controllers.RightClickContainer.ListOfObjects;
+import sample.controllers.RightClickContainer.RightClickObject;
 import sample.controllers.controllersList.items.ItemHandle;
 import sample.controllers.controllersList.items.views.Item;
 import sample.controllers.controllersList.monster.Monster;
@@ -19,6 +25,7 @@ import sample.controllers.helpClass.UrlHandle;
 import sample.controllers.windows.AlertWindow;
 
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -121,20 +128,41 @@ public class Controller {
         contextMenu.getItems().add(menuMonster);
         contextMenu.getItems().add(menuItem);
     }
-    public  void updateRightMenu()
-    {
+    public  void updateRightMenu() {
         menuMonster.getItems().clear();
 
         menuItem.getItems().clear();
 
-        for (Monster monster : MonsterHandle.monsterList)
-        { menuMonster.getItems().add(new MenuItem(monster.getName()));   }
-        for (Item item: ItemHandle.itemsList)
-        {menuItem.getItems().add(new MenuItem(item.getName()));}
+        for (Monster monster : MonsterHandle.monsterList) {
+
+            MenuItem menuMonsters = new MenuItem(monster.getName());
+            menuMonsters.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    RightClickObject rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, monster);
+                    ListOfObjects.rightClickObjectList.add(rightClickObject);
+                }
+            });
+            menuMonster.getItems().add(menuMonsters);
 
 
+        }
+
+        for (Item item : ItemHandle.itemsList) {
+            MenuItem menuItems = new MenuItem(item.getName());
+            menuItems.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    RightClickObject rightClickObject;
+                    rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, item);
+                    ListOfObjects.rightClickObjectList.add(rightClickObject);
+                }
+            });
+            menuItem.getItems().add(menuItems);
+
+        }
     }
-    ArrayList<MenuItem> menuItemsMonster = new ArrayList<>();
+
     @FXML
     void create(ActionEvent event) throws Exception {
         menu.setItems(Menuitems);
@@ -160,7 +188,7 @@ public class Controller {
         MouseButton button = event.getButton();
 
         xPosition = (int) (event.getX() / Tile.width);
-        yPosition = (int) (event.getY() / Tile.height);
+         yPosition = (int) (event.getY() / Tile.height);
         System.out.println(" x " + xPosition + "= " + event.getX());
         System.out.println(" y " + yPosition + "= " + event.getY());
 
@@ -184,7 +212,12 @@ public class Controller {
             }
         }
         else if(button==MouseButton.SECONDARY) {
-            try {
+            for(RightClickObject r : ListOfObjects.rightClickObjectList)
+            {
+                System.out.println("----");
+                System.out.println(r.toString());
+            }
+
                 contextMenu.hide();
                 updateRightMenu();
 
@@ -201,10 +234,7 @@ public class Controller {
 
                 });
 
-            }
-            catch (UnsupportedOperationException e){
-                System.out.println("cos nie pyklo");
-            }
+
         }
 
 
@@ -285,7 +315,6 @@ public class Controller {
         tileChosen.setRotate(0);
         System.out.println(UrlHandle.url);
         tileChosen.getChildren().clear();
-        System.out.println("klikanie to " + MapClass.rotate);
         tileChosen.getChildren().add(MapClass.changeTille(UrlHandle.url));
 
     }
