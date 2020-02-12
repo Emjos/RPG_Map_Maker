@@ -14,6 +14,7 @@ import java.io.IOException;
 public class MonsterController {
 
 
+
     private final sample.controllers.helpClass.newPane newPane = new newPane();
     @FXML
     private ListView<String> monsterLists;

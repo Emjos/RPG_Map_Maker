@@ -1,16 +1,18 @@
 package sample.controllers.controllersList.monster;
 
+import sample.controllers.helpClass.ListHanle;
+
 import java.util.ArrayList;
 import java.util.List;
 
- class MonsterHandle {
+ public class  MonsterHandle {
 
     static  Monster monsterHandle;
     static int index;
     static String name;
     static int flag = 0;
 
-    static  List<Monster> monsterList = new ArrayList<>();
+    public static  List<Monster> monsterList = new ArrayList<>();
 
     static void find (String name) {
 
@@ -28,6 +30,7 @@ import java.util.List;
             for (int a = 0 ; a < monsterList.size() ; a++){
                 if (monsterList.get(a).getName().equals(name)){
                     monsterList.remove(a);
+
                     break;
                 }
 

@@ -12,7 +12,7 @@ import java.util.List;
     static String name;
     static int flag = 0;
 
-    static List<Item> itemsList = new ArrayList<>();
+   public static List<Item> itemsList = new ArrayList<>();
 
     static void delete(String name)
     {

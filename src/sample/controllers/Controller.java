@@ -2,16 +2,27 @@ package sample.controllers;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.stage.WindowEvent;
+import sample.controllers.controllersList.items.ItemController;
+import sample.controllers.controllersList.monster.Monster;
+import sample.controllers.controllersList.monster.MonsterController;
+import sample.controllers.controllersList.monster.MonsterHandle;
 import sample.controllers.helpClass.UrlHandle;
 import sample.controllers.windows.AlertWindow;
 
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Controller {
@@ -23,6 +34,10 @@ public class Controller {
 
     ObjectTilePane objectTilePane;
     ObservableList<String> Menuitems = UrlHandle.menuItems;
+
+
+
+
     @FXML
     private Button monsterOpenPane;
     @FXML
@@ -109,26 +124,69 @@ public class Controller {
 
     }
 
+
+
+
+    ContextMenu contextMenu = new ContextMenu();
+    Menu menuItem = new Menu("Add Monster");
+    MenuItem menuItem2 = new MenuItem("Add Item");
+    ArrayList<MenuItem> menuItemsMonster = new ArrayList<>();
+
+    void addToAddMenuList(){
+
+        for (Monster monster : MonsterHandle.monsterList) {
+          menuItemsMonster.add(new MenuItem(monster.getName()));
+        }
+    }
+
+
+
     @FXML
     void position(MouseEvent event) {
-        xPosition = (int) (event.getX() /Tile.width);
-        yPosition = (int) (event.getY() / Tile.height);
-        System.out.println(" x " + xPosition + "= " +event.getX());
-        System.out.println(" y " + yPosition  + "= " +event.getY());
-        if(xPosition >= MapClass.width){
-            xPosition = MapClass.width-1;
-        }
-        if(yPosition >= MapClass.width){
-            yPosition= MapClass.width-1;
-        }
-       if (UrlHandle.tillChosee ==0) {
-            changePhoto(yPosition, xPosition);
-       }
-        if(UrlHandle.tillChosee == 1){
+        MouseButton button = event.getButton();
 
-             UrlHandle.bdgURL = MapClass.findUrl(yPosition,xPosition,MapClass.index);
-            changePhotoClear(yPosition, xPosition);
+        xPosition = (int) (event.getX() / Tile.width);
+        yPosition = (int) (event.getY() / Tile.height);
+        System.out.println(" x " + xPosition + "= " + event.getX());
+        System.out.println(" y " + yPosition + "= " + event.getY());
+
+
+        if(button==MouseButton.PRIMARY) {
+        contextMenu.hide();
+
+            if (xPosition >= MapClass.width) {
+                xPosition = MapClass.width - 1;
+            }
+            if (yPosition >= MapClass.width) {
+                yPosition = MapClass.width - 1;
+            }
+            if (UrlHandle.tillChosee == 0) {
+                changePhoto(yPosition, xPosition);
+            }
+            if (UrlHandle.tillChosee == 1) {
+
+                UrlHandle.bdgURL = MapClass.findUrl(yPosition, xPosition, MapClass.index);
+                changePhotoClear(yPosition, xPosition);
+            }
         }
+        else if(button==MouseButton.SECONDARY)
+        {
+        contextMenu.getItems().add(menuItem2);
+        // dodac childs do parents
+
+
+            tilePane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+                @Override
+                public void handle(ContextMenuEvent event) {
+
+                    contextMenu.show(tilePane, event.getScreenX(), event.getScreenY());
+                }
+
+            });
+
+        }
+
 
     }
 
@@ -201,6 +259,7 @@ public class Controller {
 
     @FXML
     void objectMouseClicked(MouseEvent event) {
+
         MapClass.rotate = 0;
         tileChosen.setRotate(0);
         System.out.println(UrlHandle.url);
