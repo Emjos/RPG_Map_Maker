@@ -6,12 +6,12 @@ import sample.controllers.controllersList.monster.Monster;
 import java.awt.*;
 
 public class RightClickObject {
-    int mapIndex;
-    String mapName;
-    int x;
-    int y;
-    Monster monster;
-    Item item;
+    public int mapIndex;
+    public String mapName;
+    public  int x;
+    public   int y;
+    public   Monster monster;
+    public  Item item;
 
     public RightClickObject(int mapIndex, String mapName, int x, int y, Monster monster) {
         this.mapIndex = mapIndex;

@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -15,6 +16,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.shape.Circle;
 import sample.controllers.RightClickContainer.ListOfObjects;
 import sample.controllers.RightClickContainer.RightClickObject;
 import sample.controllers.controllersList.items.ItemHandle;
@@ -28,6 +30,9 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static java.awt.Color.CYAN;
+import static javafx.scene.paint.Color.SALMON;
 
 
 public class Controller {
@@ -123,15 +128,24 @@ public class Controller {
     ContextMenu contextMenu = new ContextMenu();
     static public Menu menuMonster = new Menu("Add Monster");
     static public Menu menuItem = new Menu("Add Item");
+    static public MenuItem delete = new MenuItem("Delete");
 
     public  void addRightMenu() {
         contextMenu.getItems().add(menuMonster);
         contextMenu.getItems().add(menuItem);
+        contextMenu.getItems().add(delete);
     }
     public  void updateRightMenu() {
         menuMonster.getItems().clear();
 
         menuItem.getItems().clear();
+
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ListOfObjects.deleteItem(MapClass.index,yPosition,xPosition);
+            }
+        });
 
         for (Monster monster : MonsterHandle.monsterList) {
 
@@ -140,8 +154,10 @@ public class Controller {
                 @Override
                 public void handle(ActionEvent event) {
                     RightClickObject rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, monster);
-                    ListOfObjects.rightClickObjectList.add(rightClickObject);
+
+                    ListOfObjects.checkAndAdd(rightClickObject);
                 }
+
             });
             menuMonster.getItems().add(menuMonsters);
 
@@ -155,7 +171,10 @@ public class Controller {
                 public void handle(ActionEvent event) {
                     RightClickObject rightClickObject;
                     rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, item);
-                    ListOfObjects.rightClickObjectList.add(rightClickObject);
+                    ListOfObjects.checkAndAdd(rightClickObject);
+                  //  MapClass.tilesList.get(MapClass.index);// aktualna mapa
+
+
                 }
             });
             menuItem.getItems().add(menuItems);
@@ -221,7 +240,7 @@ public class Controller {
                 contextMenu.hide();
                 updateRightMenu();
 
-                // dodac childs do parents
+
 
 
                 tilePane.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
