@@ -13,9 +13,10 @@ public class ListOfObjects {
   public static AlertWindow alertWindow = new AlertWindow();
   ;
 
-  static public void checkAndAdd(RightClickObject rightClickObject) {
+  static public boolean checkAndAdd(RightClickObject rightClickObject) {
     if (rightClickObjectList.isEmpty()) {
       rightClickObjectList.add(rightClickObject);
+      return true;
     } else {
       a = 0;
       for (RightClickObject r : rightClickObjectList) {
@@ -24,14 +25,17 @@ public class ListOfObjects {
                 && r.x == rightClickObject.x) {
           a = 1;
           alertWindow.setAlert("Tile already used");
-          break;
+          return false;
+
         }
       }
       if (a == 0) {
 
         rightClickObjectList.add(rightClickObject);
+        return true;
       }
     }
+    return false;
   }
 
   static public void deleteItem(int mapIndex, int y, int x) {

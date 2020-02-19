@@ -156,9 +156,9 @@ public class Controller {
                 public void handle(ActionEvent event) {
                     RightClickObject rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, monster);
 
-                    ListOfObjects.checkAndAdd(rightClickObject);
-                    changePhotoClear2(yPosition,xPosition,"sample/image/objects/66.png");
-
+                    if (ListOfObjects.checkAndAdd(rightClickObject)) {
+                        changePhotoClear2(yPosition, xPosition, "sample/image/objects/66.png");
+                    }
                 }
 
             });
@@ -174,8 +174,9 @@ public class Controller {
                 public void handle(ActionEvent event) {
                     RightClickObject rightClickObject;
                     rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, item);
-                    ListOfObjects.checkAndAdd(rightClickObject);
-                    changePhotoClear2(yPosition,xPosition,"sample/image/objects/111.png");
+                    if (ListOfObjects.checkAndAdd(rightClickObject)) {
+                        changePhotoClear2(yPosition, xPosition, "sample/image/objects/111.png");
+                    }
                   //  MapClass.tilesList.get(MapClass.index);// aktualna mapa
 
 
@@ -280,7 +281,8 @@ public class Controller {
 
         tilePane.getChildren().clear();
         System.out.println(UrlHandle.url);
-        test.update2(x, y,dgbURL,UrlHandle.url, MapClass.index);
+        String back = test.getbgdUrl(x,y,MapClass.index);
+        test.update2(x, y,dgbURL,back, MapClass.index);
         test.add(tilePane, MapClass.index);
     }
 
