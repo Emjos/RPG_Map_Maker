@@ -124,6 +124,7 @@ public class Controller {
     {
         addRightMenu();
 
+
     }
     ContextMenu contextMenu = new ContextMenu();
     static public Menu menuMonster = new Menu("Add Monster");
@@ -156,6 +157,8 @@ public class Controller {
                     RightClickObject rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, monster);
 
                     ListOfObjects.checkAndAdd(rightClickObject);
+                    changePhotoClear2(yPosition,xPosition,"sample/image/objects/66.png");
+
                 }
 
             });
@@ -172,6 +175,7 @@ public class Controller {
                     RightClickObject rightClickObject;
                     rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, item);
                     ListOfObjects.checkAndAdd(rightClickObject);
+                    changePhotoClear2(yPosition,xPosition,"sample/image/objects/111.png");
                   //  MapClass.tilesList.get(MapClass.index);// aktualna mapa
 
 
@@ -262,14 +266,21 @@ public class Controller {
 
     void changePhoto(int x, int y) {
         tilePane.getChildren().clear();
-       test.update(x, y, UrlHandle.url, MapClass.index);
+       test.update2(x, y,UrlHandle.url, UrlHandle.url, MapClass.index);
        test.add(tilePane, MapClass.index);
 
     }
     void changePhotoClear(int x, int y) {
 
         tilePane.getChildren().clear();
-        test.update(x, y, UrlHandle.url, MapClass.index);
+        test.update2(x, y, UrlHandle.url,UrlHandle.bdgURL, MapClass.index);
+        test.add(tilePane, MapClass.index);
+    }
+    void changePhotoClear2(int x, int y,String dgbURL) {
+
+        tilePane.getChildren().clear();
+        System.out.println(UrlHandle.url);
+        test.update2(x, y,dgbURL,UrlHandle.url, MapClass.index);
         test.add(tilePane, MapClass.index);
     }
 
@@ -464,8 +475,9 @@ public class Controller {
         for (int x = 0; x < MapClass.height; x++) {
             for (int y = 0; y < MapClass.width; y++) {
                 String url = test.getUrl(x, y, index);
+                String bgrurl = test.getbgdUrl(x, y, index);
                 System.out.println(url);
-                test.update(x, y, url, index);
+                test.update2(x, y,url, bgrurl, index);
 
             }
         }

@@ -31,7 +31,7 @@ public class MapClass {
     static Tile changeTille(String url) {
         System.out.println(rotate);
 
-       Tile tile1 = new Tile(url);
+       Tile tile1 = new Tile(url,url);
        tile1.imageView.setRotate(rotate);
        return tile1;
 

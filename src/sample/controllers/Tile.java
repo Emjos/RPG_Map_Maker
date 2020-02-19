@@ -15,6 +15,7 @@ import sample.controllers.helpClass.UrlHandle;
 class Tile extends StackPane {
         ImageView imageView;
     String urlImage;
+    String backgroundUrl;
     static  int height=64;
     static  int width= 64;
     public Tile(String url) {
@@ -36,7 +37,29 @@ class Tile extends StackPane {
 
         getChildren().addAll(border, imageView);
     }
+    public Tile(String url,String bckUrl) {
+        urlImage = url;
+        backgroundUrl = bckUrl;
 
+        Rectangle border = new Rectangle(width, height);
+        border.setFill(null);
+        Image image = new Image(url);
+
+
+        imageView = new ImageView(image);
+        imageView.setStyle("-fx-background-color: BLACK");
+
+
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
+        imageView.setFitWidth(width);
+
+        imageView.setFitHeight(height);
+
+
+        getChildren().addAll(border, imageView);
+    }
 
 
 }
