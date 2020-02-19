@@ -12,6 +12,7 @@ public class RightClickObject {
     public   int y;
     public   Monster monster;
     public  Item item;
+    public String frontUrl;
 
     public RightClickObject(int mapIndex, String mapName, int x, int y, Monster monster) {
         this.mapIndex = mapIndex;
@@ -19,6 +20,7 @@ public class RightClickObject {
         this.x = x;
         this.y = y;
         this.monster = monster;
+        frontUrl = "sample/image/objects/66.png";
     }
 
     public RightClickObject(int mapIndex, String mapName, int x, int y, Item item) {
@@ -27,6 +29,7 @@ public class RightClickObject {
         this.x = x;
         this.y = y;
         this.item = item;
+        frontUrl = "sample/image/objects/111.png";
     }
 
     @Override

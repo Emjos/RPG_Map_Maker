@@ -47,7 +47,7 @@ class Tile extends StackPane {
 
 
         imageView = new ImageView(image);
-        imageView.setStyle("-fx-background-color: BLACK");
+
 
 
         imageView.setPreserveRatio(true);
