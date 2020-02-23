@@ -1,5 +1,6 @@
 package sample.controllers.RightClickContainer;
 
+import sample.controllers.controllersList.actions.Action;
 import sample.controllers.controllersList.items.views.Item;
 import sample.controllers.controllersList.monster.Monster;
 
@@ -12,7 +13,19 @@ public class RightClickObject {
     public   int y;
     public   Monster monster;
     public  Item item;
+    public Action action;
     public String frontUrl;
+
+    public RightClickObject(int mapIndex, String mapName, int x, int y, Action action) {
+        this.mapIndex = mapIndex;
+        this.mapName = mapName;
+        this.x = x;
+        this.y = y;
+        this.action = action;
+        frontUrl = "sample/image/objects/666.png" ;
+    }
+
+
 
     public RightClickObject(int mapIndex, String mapName, int x, int y, Monster monster) {
         this.mapIndex = mapIndex;

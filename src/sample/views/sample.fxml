@@ -39,7 +39,7 @@
                <children>
                   <Button fx:id="monsterOpenPane" mnemonicParsing="false" onAction="#monsterOpenAction" prefHeight="25.0" prefWidth="150.0" text="Monsters" />
                   <Button fx:id="itemsOpenPane" mnemonicParsing="false" onAction="#itemOpenAction" prefWidth="150.0" text="Items" />
-                  <Button fx:id="actionsOpenPane" mnemonicParsing="false" prefWidth="150.0" text="Actions" />
+                  <Button fx:id="actionsOpenPane" mnemonicParsing="false" onAction="#actionOpenAction" prefWidth="150.0" text="Actions" />
                   <Button fx:id="zoomPlusButton" mnemonicParsing="false" onAction="#zoomPlusAction" prefHeight="25.0" prefWidth="150.0" text="Zoom+" />
                   <Button fx:id="zoomMinusButton" mnemonicParsing="false" onAction="#zoomMinusAction" prefHeight="25.0" prefWidth="150.0" text="Zoom-" />
                </children>

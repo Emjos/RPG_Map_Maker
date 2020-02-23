@@ -64,6 +64,7 @@ public class MonsterController {
     @FXML
     void newMonsterAction(ActionEvent event) {
         try {
+            MonsterHandle.flag = 0;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/addMonsterPane.fxml"));
 
             newPane.newPeneClass(fxmlLoader);

@@ -19,6 +19,8 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Circle;
 import sample.controllers.RightClickContainer.ListOfObjects;
 import sample.controllers.RightClickContainer.RightClickObject;
+import sample.controllers.controllersList.actions.Action;
+import sample.controllers.controllersList.actions.ActionHandle;
 import sample.controllers.controllersList.items.ItemHandle;
 import sample.controllers.controllersList.items.views.Item;
 import sample.controllers.controllersList.monster.Monster;
@@ -129,16 +131,18 @@ public class Controller {
     ContextMenu contextMenu = new ContextMenu();
     static public Menu menuMonster = new Menu("Add Monster");
     static public Menu menuItem = new Menu("Add Item");
+    static public Menu menuAction = new Menu("Add Action");
     static public MenuItem delete = new MenuItem("Delete");
 
     public  void addRightMenu() {
         contextMenu.getItems().add(menuMonster);
         contextMenu.getItems().add(menuItem);
+        contextMenu.getItems().add(menuAction);
         contextMenu.getItems().add(delete);
     }
     public  void updateRightMenu() {
         menuMonster.getItems().clear();
-
+        menuAction.getItems().clear();
         menuItem.getItems().clear();
 
         delete.setOnAction(new EventHandler<ActionEvent>() {
@@ -189,6 +193,25 @@ public class Controller {
             menuItem.getItems().add(menuItems);
 
         }
+
+        for (Action action : ActionHandle.actionList)
+        {
+            MenuItem actionItem = new MenuItem(action.getName());
+            actionItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    RightClickObject rightClickObject;
+                    rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, action);
+                    if (ListOfObjects.checkAndAdd(rightClickObject)) {
+                        changePhotoClear2(yPosition, xPosition, "sample/image/objects/666.png");
+
+
+                    }
+                }
+            });
+            menuAction.getItems().add(actionItem);
+        }
+
     }
 
     @FXML
@@ -263,7 +286,6 @@ public class Controller {
 
                 //UrlHandle.bdgURL = MapClass.findUrl(yPosition, xPosition, MapClass.index);
 
-                System.out.println("BGDURLLLLLLL " + test.getUrl(yPosition,xPosition,MapClass.index));
                 changePhotoClear3(yPosition, xPosition,UrlHandle.url,test.getbgdUrl(yPosition,xPosition,MapClass.index));
             }
         }
@@ -273,6 +295,7 @@ public class Controller {
                 System.out.println("----");
                 System.out.println(r.toString());
             }
+
 
                 contextMenu.hide();
                 updateRightMenu();
@@ -476,6 +499,18 @@ public class Controller {
         try {
             menu.setItems(Menuitems);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/itemPane.fxml"));
+
+            newPane.newPeneClass(fxmlLoader);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void actionOpenAction(ActionEvent event) {
+        try {
+            menu.setItems(Menuitems);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/actionPane.fxml"));
 
             newPane.newPeneClass(fxmlLoader);
 
