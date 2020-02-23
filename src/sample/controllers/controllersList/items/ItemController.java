@@ -61,6 +61,7 @@ public class ItemController {
     @FXML
     void newItemAction(ActionEvent event) throws Exception
     {
+        ItemHandle.flag = 0;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/addItemPane.fxml"));
 
         newPane.newPeneClass(fxmlLoader);

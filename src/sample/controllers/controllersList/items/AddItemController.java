@@ -57,7 +57,7 @@ public class AddItemController {
           ItemController.itemsItems.add(nameFIeld.getText());
             ItemHandle.itemsList.add(item);
         }
-    if(ItemHandle.flag == 1)
+   else if(ItemHandle.flag == 1)
     {
         for (Item item : ItemHandle.itemsList)
         {

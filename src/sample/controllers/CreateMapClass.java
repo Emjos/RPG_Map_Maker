@@ -6,6 +6,8 @@ import javafx.scene.layout.TilePane;
 import javafx.geometry.Pos;
 import sample.controllers.helpClass.UrlHandle;
 
+import java.sql.Connection;
+
 public class CreateMapClass {
 
     int x;
@@ -23,7 +25,7 @@ public class CreateMapClass {
         Tile[][] tiles = new Tile[x][y];
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                tiles[i][j] = new Tile(fullUrl);
+                tiles[i][j] = new Tile(fullUrl,fullUrl);
                 System.out.println("x " + i + " y " +j);
             }
 
@@ -47,8 +49,12 @@ public class CreateMapClass {
         tiles1 = MapClass.tilesList.get(index);
         return tiles1[x][y].urlImage;
     }
+    String getbgdUrl(int x, int y, int index){
+        tiles1 = MapClass.tilesList.get(index);
+        return tiles1[x][y].backgroundUrl;
+    }
 
-    void  update (int x, int y,String  url,int index){
+  /*  void  update (int x, int y,String  url,int index){
         tiles1 =    MapClass.tilesList.get(index);
         System.out.println("x to " + x);
         System.out.println("Y to " + y);
@@ -61,6 +67,23 @@ public class CreateMapClass {
 
             tiles1[x][y].setStyle(style); // przezroczystosc do zdjec z objects
         }
+
+        MapClass.tilesList.set(index,tiles1);
+
+    }
+
+    stara wersja update, nei dzialala z backgroundURL
+    */
+    void  update2 (int x, int y,String  url,String bcgUrl,int index){
+        System.out.println("To nowy upade 2 z bgdURL");
+        tiles1 =    MapClass.tilesList.get(index);
+       // tiles1[x][y] = null;
+       // tiles1[x][y] = MapClass.changeTille(url);
+        tiles1[x][y] = new Tile(url,bcgUrl);
+        String style = "-fx-background-image: url("+bcgUrl+");"+
+                "-fx-background-size: cover;";
+        tiles1[x][y].setStyle(style);
+
 
         MapClass.tilesList.set(index,tiles1);
 
@@ -81,6 +104,8 @@ public class CreateMapClass {
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 tilePane.getChildren().add(tileTest[i][j]);
+
+
                 }
         }
         MapClass.index = index;

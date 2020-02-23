@@ -19,6 +19,8 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Circle;
 import sample.controllers.RightClickContainer.ListOfObjects;
 import sample.controllers.RightClickContainer.RightClickObject;
+import sample.controllers.controllersList.actions.Action;
+import sample.controllers.controllersList.actions.ActionHandle;
 import sample.controllers.controllersList.items.ItemHandle;
 import sample.controllers.controllersList.items.views.Item;
 import sample.controllers.controllersList.monster.Monster;
@@ -124,26 +126,30 @@ public class Controller {
     {
         addRightMenu();
 
+
     }
     ContextMenu contextMenu = new ContextMenu();
     static public Menu menuMonster = new Menu("Add Monster");
     static public Menu menuItem = new Menu("Add Item");
+    static public Menu menuAction = new Menu("Add Action");
     static public MenuItem delete = new MenuItem("Delete");
 
     public  void addRightMenu() {
         contextMenu.getItems().add(menuMonster);
         contextMenu.getItems().add(menuItem);
+        contextMenu.getItems().add(menuAction);
         contextMenu.getItems().add(delete);
     }
     public  void updateRightMenu() {
         menuMonster.getItems().clear();
-
+        menuAction.getItems().clear();
         menuItem.getItems().clear();
 
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 ListOfObjects.deleteItem(MapClass.index,yPosition,xPosition);
+                changePhotoClear3(yPosition,xPosition,test.getbgdUrl(yPosition,xPosition,MapClass.index),test.getbgdUrl(yPosition,xPosition,MapClass.index) );
             }
         });
 
@@ -155,7 +161,10 @@ public class Controller {
                 public void handle(ActionEvent event) {
                     RightClickObject rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, monster);
 
-                    ListOfObjects.checkAndAdd(rightClickObject);
+                    if (ListOfObjects.checkAndAdd(rightClickObject)) {
+                        changePhotoClear2(yPosition, xPosition, "sample/image/objects/66.png");
+
+                    }
                 }
 
             });
@@ -171,7 +180,11 @@ public class Controller {
                 public void handle(ActionEvent event) {
                     RightClickObject rightClickObject;
                     rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, item);
-                    ListOfObjects.checkAndAdd(rightClickObject);
+                    if (ListOfObjects.checkAndAdd(rightClickObject)) {
+                        changePhotoClear2(yPosition, xPosition, "sample/image/objects/111.png");
+
+
+                    }
                   //  MapClass.tilesList.get(MapClass.index);// aktualna mapa
 
 
@@ -180,6 +193,25 @@ public class Controller {
             menuItem.getItems().add(menuItems);
 
         }
+
+        for (Action action : ActionHandle.actionList)
+        {
+            MenuItem actionItem = new MenuItem(action.getName());
+            actionItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    RightClickObject rightClickObject;
+                    rightClickObject = new RightClickObject(MapClass.index, MapClass.mapLists.get(MapClass.index).name, xPosition, yPosition, action);
+                    if (ListOfObjects.checkAndAdd(rightClickObject)) {
+                        changePhotoClear2(yPosition, xPosition, "sample/image/objects/666.png");
+
+
+                    }
+                }
+            });
+            menuAction.getItems().add(actionItem);
+        }
+
     }
 
     @FXML
@@ -208,6 +240,8 @@ public class Controller {
 
         xPosition = (int) (event.getX() / Tile.width);
          yPosition = (int) (event.getY() / Tile.height);
+         String frontURl = "";
+         String backUrl;
         System.out.println(" x " + xPosition + "= " + event.getX());
         System.out.println(" y " + yPosition + "= " + event.getY());
 
@@ -222,12 +256,37 @@ public class Controller {
                 yPosition = MapClass.width - 1;
             }
             if (UrlHandle.tillChosee == 0) {
+                int checkIsAction  = 0;
                 changePhoto(yPosition, xPosition);
+                for (RightClickObject r : ListOfObjects.rightClickObjectList) {
+                    if (r.mapIndex == MapClass.index
+                            && r.y == yPosition
+                            && r.x == xPosition) {
+                    checkIsAction = 1;
+                    frontURl = r.frontUrl;
+                    break;
+                    }
+                }
+                if (checkIsAction == 0)
+                {
+                    frontURl = test.getUrl(yPosition,xPosition,MapClass.index);
+                    System.out.println("CheckIsAction = 0");
+                    System.out.println("Item bgd is " + test.getbgdUrl(yPosition,xPosition,MapClass.index));
+                    System.out.println("Item front is " + frontURl);
+                    changePhoto(yPosition, xPosition);
+                }
+                else {
+                    System.out.println("CheckIsAction = 1");
+                    System.out.println("Item bgd is " + test.getbgdUrl(yPosition,xPosition,MapClass.index));
+                    System.out.println("Item front is " + frontURl);
+                    changePhotoClear3(yPosition, xPosition,frontURl, UrlHandle.url);
+                }
             }
             if (UrlHandle.tillChosee == 1) {
 
-                UrlHandle.bdgURL = MapClass.findUrl(yPosition, xPosition, MapClass.index);
-                changePhotoClear(yPosition, xPosition);
+                //UrlHandle.bdgURL = MapClass.findUrl(yPosition, xPosition, MapClass.index);
+
+                changePhotoClear3(yPosition, xPosition,UrlHandle.url,test.getbgdUrl(yPosition,xPosition,MapClass.index));
             }
         }
         else if(button==MouseButton.SECONDARY) {
@@ -236,6 +295,7 @@ public class Controller {
                 System.out.println("----");
                 System.out.println(r.toString());
             }
+
 
                 contextMenu.hide();
                 updateRightMenu();
@@ -262,14 +322,32 @@ public class Controller {
 
     void changePhoto(int x, int y) {
         tilePane.getChildren().clear();
-       test.update(x, y, UrlHandle.url, MapClass.index);
+       test.update2(x, y,UrlHandle.url, UrlHandle.url, MapClass.index);
        test.add(tilePane, MapClass.index);
 
     }
     void changePhotoClear(int x, int y) {
 
         tilePane.getChildren().clear();
-        test.update(x, y, UrlHandle.url, MapClass.index);
+        test.update2(x, y, UrlHandle.url,UrlHandle.bdgURL, MapClass.index);
+        test.add(tilePane, MapClass.index);
+    }
+    void changePhotoClear2(int x, int y,String dgbURL) {
+
+        tilePane.getChildren().clear();
+        System.out.println(UrlHandle.url);
+        String back = test.getbgdUrl(x,y,MapClass.index);
+        test.update2(x, y,dgbURL,back, MapClass.index);
+        test.add(tilePane, MapClass.index);
+    }
+    void changePhotoClear3(int x, int y,String front,String url) {
+
+        tilePane.getChildren().clear();
+
+
+        System.out.println("Front" + " " + front);
+        System.out.println("Back" + " " + url);
+        test.update2(x, y,front,url, MapClass.index);
         test.add(tilePane, MapClass.index);
     }
 
@@ -428,6 +506,18 @@ public class Controller {
             e.printStackTrace();
         }
     }
+    @FXML
+    void actionOpenAction(ActionEvent event) {
+        try {
+            menu.setItems(Menuitems);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../views/actionPane.fxml"));
+
+            newPane.newPeneClass(fxmlLoader);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void newPeneClass(FXMLLoader fxmlLoader) throws IOException {
         newPane.newPeneClass(fxmlLoader);
@@ -464,8 +554,9 @@ public class Controller {
         for (int x = 0; x < MapClass.height; x++) {
             for (int y = 0; y < MapClass.width; y++) {
                 String url = test.getUrl(x, y, index);
+                String bgrurl = test.getbgdUrl(x, y, index);
                 System.out.println(url);
-                test.update(x, y, url, index);
+                test.update2(x, y,url, bgrurl, index);
 
             }
         }
