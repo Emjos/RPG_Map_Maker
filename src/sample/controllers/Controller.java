@@ -261,8 +261,10 @@ public class Controller {
             }
             if (UrlHandle.tillChosee == 1) {
 
-                UrlHandle.bdgURL = MapClass.findUrl(yPosition, xPosition, MapClass.index);
-                changePhotoClear(yPosition, xPosition);
+                //UrlHandle.bdgURL = MapClass.findUrl(yPosition, xPosition, MapClass.index);
+
+                System.out.println("BGDURLLLLLLL " + test.getUrl(yPosition,xPosition,MapClass.index));
+                changePhotoClear3(yPosition, xPosition,UrlHandle.url,test.getbgdUrl(yPosition,xPosition,MapClass.index));
             }
         }
         else if(button==MouseButton.SECONDARY) {

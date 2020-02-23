@@ -21,9 +21,9 @@ public class ToDo {
 
 ------------------
 
-// - usunac ikonke akcji po PPM
-// - przez delete usowac akcje-obiekty
-// przestawic akcje obiekty tak jak to zrobione z PPM
+
+
+
 // zrobic mapy na zasadzie akctions - Big Terra obiekts i Small terra obiekts
 // zrobic small terra map
 
