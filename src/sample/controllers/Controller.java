@@ -145,6 +145,7 @@ public class Controller {
             @Override
             public void handle(ActionEvent event) {
                 ListOfObjects.deleteItem(MapClass.index,yPosition,xPosition);
+                changePhotoClear3(yPosition,xPosition,test.getbgdUrl(yPosition,xPosition,MapClass.index),test.getbgdUrl(yPosition,xPosition,MapClass.index) );
             }
         });
 

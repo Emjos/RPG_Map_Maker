@@ -14,9 +14,18 @@ public class ToDo {
 
 // 12/02 zmienic kafelki jezeli cos na nich jest
 
-
+//19.02 przyspieszyc wyswietlanie kafelek, przy 20 x 20 schodzi juz troche
+    // usprawnic delete na PPM
     /*
     Kafelki do terra powinny byc mniejsze , napewno drogi
+
+------------------
+
+// - usunac ikonke akcji po PPM
+// - przez delete usowac akcje-obiekty
+// przestawic akcje obiekty tak jak to zrobione z PPM
+// zrobic mapy na zasadzie akctions - Big Terra obiekts i Small terra obiekts
+// zrobic small terra map
 
  */
 }
