@@ -26,7 +26,7 @@ public class CreateMapClass {
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 tiles[i][j] = new Tile(fullUrl,fullUrl);
-                System.out.println("x " + i + " y " +j);
+
             }
 
         }
@@ -53,6 +53,10 @@ public class CreateMapClass {
         tiles1 = MapClass.tilesList.get(index);
         return tiles1[x][y].backgroundUrl;
     }
+    double getRotate(int x, int y, int index){
+        tiles1 = MapClass.tilesList.get(index);
+        return tiles1[x][y].getRotate();
+    }
 
   /*  void  update (int x, int y,String  url,int index){
         tiles1 =    MapClass.tilesList.get(index);
@@ -74,12 +78,14 @@ public class CreateMapClass {
 
     stara wersja update, nei dzialala z backgroundURL
     */
-    void  update2 (int x, int y,String  url,String bcgUrl,int index){
-        System.out.println("To nowy upade 2 z bgdURL");
+    void  update2 (int x, int y,String  url,String bcgUrl,int index,double rotation){
+
         tiles1 =    MapClass.tilesList.get(index);
-       // tiles1[x][y] = null;
-       // tiles1[x][y] = MapClass.changeTille(url);
+        double rotate = rotation;
+        // tiles1[x][y] = null;
+        // tiles1[x][y] = MapClass.changeTille(url);
         tiles1[x][y] = new Tile(url,bcgUrl);
+        tiles1[x][y].setRotate(rotate);
         String style = "-fx-background-image: url("+bcgUrl+");"+
                 "-fx-background-size: cover;";
         tiles1[x][y].setStyle(style);
@@ -88,6 +94,7 @@ public class CreateMapClass {
         MapClass.tilesList.set(index,tiles1);
 
     }
+
     void add(TilePane tilePane,int index){
         Tile[] [] tileTest =   MapClass.tilesList.get(index);
         int x = tileTest.length;
@@ -97,8 +104,8 @@ public class CreateMapClass {
       tilePane.setPrefTileHeight(Tile.height);
       tilePane.setPrefTileWidth(Tile.width);
         tilePane.setPrefRows(x);
-        tilePane.setVgap(1);
-        tilePane.setHgap(1);
+        tilePane.setVgap(Tile.gap);
+        tilePane.setHgap(Tile.gap);
 
 
         for (int i = 0; i < x; i++) {

@@ -118,7 +118,11 @@ String description = "5";
         groundMenu.setText("Terra");
         scene = "terra";
     }
-
+    @FXML
+    void smallTerraAction(ActionEvent event) {
+        groundMenu.setText("Small Terra");
+        scene = "terraSmall";
+    }
     @FXML
     void towerAction(ActionEvent event) {
         groundMenu.setText("Tower");

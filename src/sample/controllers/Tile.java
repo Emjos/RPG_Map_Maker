@@ -16,8 +16,10 @@ class Tile extends StackPane {
         ImageView imageView;
     String urlImage;
     String backgroundUrl;
-    static  int height=64;
-    static  int width= 64;
+
+    static  double height=64;
+    static  double width= 64;
+    static  double gap= 1;
     public Tile(String url) {
          urlImage = url;
 
@@ -59,6 +61,8 @@ class Tile extends StackPane {
 
 
         getChildren().addAll(border, imageView);
+
+
     }
 
 

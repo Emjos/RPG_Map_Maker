@@ -29,6 +29,7 @@
       <MenuButton fx:id="groundMenu" layoutX="428.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Ground">
          <items>
             <MenuItem fx:id="terraMenu" mnemonicParsing="false" onAction="#terraAction" text="Terra" />
+            <MenuItem fx:id="smallTerraMenu" mnemonicParsing="false" onAction="#smallTerraAction" text="Small Terra" />
             <MenuItem fx:id="towerMenu" mnemonicParsing="false" onAction="#towerAction" text="Tower" />
             <MenuItem fx:id="mineMenu" mnemonicParsing="false" onAction="#mineAction" text="Mine" />
             <MenuItem fx:id="underMenu" mnemonicParsing="false" onAction="#underAction" text="Underground" />

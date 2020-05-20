@@ -6,7 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
+
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -16,7 +16,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
-import javafx.scene.shape.Circle;
+
 import sample.controllers.RightClickContainer.ListOfObjects;
 import sample.controllers.RightClickContainer.RightClickObject;
 import sample.controllers.controllersList.actions.Action;
@@ -28,13 +28,8 @@ import sample.controllers.controllersList.monster.MonsterHandle;
 import sample.controllers.helpClass.UrlHandle;
 import sample.controllers.windows.AlertWindow;
 
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import static java.awt.Color.CYAN;
-import static javafx.scene.paint.Color.SALMON;
+import java.io.IOException;
 
 
 public class Controller {
@@ -241,7 +236,7 @@ public class Controller {
         xPosition = (int) (event.getX() / Tile.width);
          yPosition = (int) (event.getY() / Tile.height);
          String frontURl = "";
-         String backUrl;
+
         System.out.println(" x " + xPosition + "= " + event.getX());
         System.out.println(" y " + yPosition + "= " + event.getY());
 
@@ -252,8 +247,8 @@ public class Controller {
             if (xPosition >= MapClass.width) {
                 xPosition = MapClass.width - 1;
             }
-            if (yPosition >= MapClass.width) {
-                yPosition = MapClass.width - 1;
+            if (yPosition >= MapClass.height) {
+                yPosition = MapClass.height - 1;
             }
             if (UrlHandle.tillChosee == 0) {
                 int checkIsAction  = 0;
@@ -270,15 +265,11 @@ public class Controller {
                 if (checkIsAction == 0)
                 {
                     frontURl = test.getUrl(yPosition,xPosition,MapClass.index);
-                    System.out.println("CheckIsAction = 0");
-                    System.out.println("Item bgd is " + test.getbgdUrl(yPosition,xPosition,MapClass.index));
-                    System.out.println("Item front is " + frontURl);
+
                     changePhoto(yPosition, xPosition);
                 }
                 else {
-                    System.out.println("CheckIsAction = 1");
-                    System.out.println("Item bgd is " + test.getbgdUrl(yPosition,xPosition,MapClass.index));
-                    System.out.println("Item front is " + frontURl);
+
                     changePhotoClear3(yPosition, xPosition,frontURl, UrlHandle.url);
                 }
             }
@@ -322,14 +313,14 @@ public class Controller {
 
     void changePhoto(int x, int y) {
         tilePane.getChildren().clear();
-       test.update2(x, y,UrlHandle.url, UrlHandle.url, MapClass.index);
+       test.update2(x, y,UrlHandle.url, UrlHandle.url, MapClass.index,MapClass.rotate);
        test.add(tilePane, MapClass.index);
 
     }
     void changePhotoClear(int x, int y) {
 
         tilePane.getChildren().clear();
-        test.update2(x, y, UrlHandle.url,UrlHandle.bdgURL, MapClass.index);
+        test.update2(x, y, UrlHandle.url,UrlHandle.bdgURL, MapClass.index,MapClass.rotate);
         test.add(tilePane, MapClass.index);
     }
     void changePhotoClear2(int x, int y,String dgbURL) {
@@ -337,7 +328,7 @@ public class Controller {
         tilePane.getChildren().clear();
         System.out.println(UrlHandle.url);
         String back = test.getbgdUrl(x,y,MapClass.index);
-        test.update2(x, y,dgbURL,back, MapClass.index);
+        test.update2(x, y,dgbURL,back, MapClass.index,MapClass.rotate);
         test.add(tilePane, MapClass.index);
     }
     void changePhotoClear3(int x, int y,String front,String url) {
@@ -345,9 +336,8 @@ public class Controller {
         tilePane.getChildren().clear();
 
 
-        System.out.println("Front" + " " + front);
-        System.out.println("Back" + " " + url);
-        test.update2(x, y,front,url, MapClass.index);
+
+        test.update2(x, y,front,url, MapClass.index,MapClass.rotate);
         test.add(tilePane, MapClass.index);
     }
 
@@ -361,6 +351,17 @@ public class Controller {
     objectTilePane.create("terra",objectscTilePane,68);
         UrlHandle.tillChosee = 0;
     }
+    @FXML
+    void smallTerraAction(ActionEvent event) {
+
+
+        groundMenu.setText("SmallTerra");
+        objectTilePane = new ObjectTilePane();
+
+        objectTilePane.create("terraSmall",objectscTilePane,31);
+        UrlHandle.tillChosee = 0;
+    }
+
     @FXML
     void mineAction(ActionEvent event) {
         groundMenu.setText("Mine");
@@ -379,7 +380,7 @@ public class Controller {
     void objectAction(ActionEvent event) {
         groundMenu.setText("Object");
         objectTilePane = new ObjectTilePane();
-        objectTilePane.create("objects",objectscTilePane,25);
+        objectTilePane.create("objects",objectscTilePane,57);
         UrlHandle.tillChosee = 1;
     }
     @FXML
@@ -458,7 +459,7 @@ public class Controller {
             test.add(tilePane, menu.getSelectionModel().getSelectedIndex());
             int b  = 0;
             for (MapList list : MapClass.mapLists) {
-                System.out.println("index "+ b +"   "+ list.toString());
+
                 b++;
             }
 
@@ -525,29 +526,29 @@ public class Controller {
 
     @FXML
     void zoomMinusAction(ActionEvent event) {
+        if(Tile.height > 29 || Tile.width > 29) {
+            Tile.height = Tile.height / 1.5;
+            Tile.width = Tile.width / 1.5;
 
-        Tile.height = Tile.height/2;
-        Tile.width = Tile.width /2;
+            tillReImplement(MapClass.index);
 
-        tillReImplement(MapClass.index);
-
-        System.out.println("Szerokosc indexu " + MapClass.width);
-        System.out.println("Wyskosc indexu " + MapClass.height);
-
-        tilePane.getChildren().clear();
-        test.add(tilePane, MapClass.index);
+            tilePane.getChildren().clear();
+            test.add(tilePane, MapClass.index);
+        }
     }
 
     @FXML
     void zoomPlusAction(ActionEvent event) {
 
+        if(Tile.height < 95 || Tile.width < 95) {
+            Tile.height = Tile.height * 1.5;
+            Tile.width = Tile.width * 1.5;
 
-        Tile.height = Tile.height*2;
-        Tile.width = Tile.width *2;
-        tillReImplement(MapClass.index);
+            tillReImplement(MapClass.index);
 
-        tilePane.getChildren().clear();
-        test.add(tilePane, MapClass.index);
+            tilePane.getChildren().clear();
+            test.add(tilePane, MapClass.index);
+        }
     }
 
     private void tillReImplement(int index) {
@@ -555,8 +556,9 @@ public class Controller {
             for (int y = 0; y < MapClass.width; y++) {
                 String url = test.getUrl(x, y, index);
                 String bgrurl = test.getbgdUrl(x, y, index);
-                System.out.println(url);
-                test.update2(x, y,url, bgrurl, index);
+                double rot = test.getRotate(x,y,index);
+
+                test.update2(x, y,url, bgrurl, index,rot);
 
             }
         }

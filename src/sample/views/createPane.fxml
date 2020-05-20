@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CreatePaneController">
+   <children>
+      <Button fx:id="createButton" layoutX="279.0" layoutY="361.0" mnemonicParsing="false" onAction="#CreateAction" text="Create" />
+      <TextField fx:id="nameTextField" layoutX="230.0" layoutY="67.0" />
+      <TextArea fx:id="descriptionTextArea" layoutX="35.0" layoutY="126.0" prefHeight="200.0" prefWidth="539.0" />
+      <Label layoutX="283.0" layoutY="42.0" text="Name:" />
+      <Label layoutX="273.0" layoutY="102.0" text="Description:" />
+   </children>
+</AnchorPane>
